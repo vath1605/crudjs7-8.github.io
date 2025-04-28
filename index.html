@@ -32,11 +32,11 @@
                                 <input type="text" id="inputName" placeholder="Student Name" class="form-control mb-3">
                                 <input type="email" id="inputEmail" placeholder="Email Address" class="form-control mb-3">
                                 <input type="file" id="inputFile" class="form-control mb-3">
-                                <input type="radio" name="gender" id="male" value="male">
+                                <input type="radio" name="gender" id="male" value="Male">
                                 <label class="form-label me-2" for="male">Male</label>
-                                <input type="radio" name="gender" id="female" value="female">
+                                <input type="radio" name="gender" id="female" value="Female">
                                 <label class="form-label me-2" for="female">Female</label>
-                                <input type="radio" name="gender" id="other" value="other">
+                                <input type="radio" name="gender" id="other" value="Other">
                                 <label class="form-label me-2" for="other">Other</label>
 
                             </form>
@@ -71,11 +71,38 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="tbody">
                 
             </tbody>
         </table>
     </main>
+    
+    <div class="modal fade" id="view" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Student Information</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-4">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-4" id="con">
+                            
+                        </div>
+                        <div class="col-8 d-flex align-items-center p-0">
+                            <table class="align-middle w-100 ">
+                                <tbody id="Tbview">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
