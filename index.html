@@ -7,6 +7,86 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
+<style>
+    .loader {
+      width: 50px;
+      padding: 8px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #25b09b;
+      --_m: 
+        conic-gradient(#0000 10%,#000),
+        linear-gradient(#000 0 0) content-box;
+      -webkit-mask: var(--_m);
+              mask: var(--_m);
+      -webkit-mask-composite: source-out;
+              mask-composite: subtract;
+      animation: l3 1s infinite linear;
+    }
+    @keyframes l3 {to{transform: rotate(1turn)}}
+    /* From Uiverse.io by cssbuttons-io */ 
+    .noselect {
+     width: 150px;
+     height: 40px;
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+     background: red;
+     border: none;
+     border-radius: 5px;
+     box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+     background: #e62222;
+    }
+    
+    .noselect, .noselect span {
+     transition: 200ms;
+    }
+    
+    .noselect .text {
+     transform: translateX(35px);
+     color: white;
+     font-weight: bold;
+    }
+    
+    .noselect .icon {
+     position: absolute;
+     border-left: 1px solid #c41b1b;
+     transform: translateX(110px);
+     height: 25px;
+     width: 40px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+    }
+    
+    .noselect svg {
+     width: 15px;
+     margin-right: 7px;
+     fill: #eee;
+    }
+    
+    .noselect:hover {
+     background: #ff3636;
+    }
+    
+    .noselect:hover .text {
+     color: transparent;
+    }
+    
+    .noselect:hover .icon {
+     width: 145px;
+     border-left: none;
+     transform: translateX(0);
+    }
+    
+    .noselect:focus {
+     outline: none;
+    }
+    
+    .noselect:active .icon svg {
+     transform: scale(0.8);
+    }
+</style>
 <body>
     <header class="container">
         <nav class="container py-3 w-50">
@@ -16,7 +96,7 @@
     <section class="container">
         <div class="row">
             <div class="col-4">
-                <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary d-flex justify-content-center align-items-center" type="button">Add <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi ms-1 bi-person-plus" viewBox="0 0 16 16">
+                <button data-bs-toggle="modal" id="addBtn" data-bs-target="#exampleModal" class="btn btn-primary d-flex justify-content-center align-items-center" type="button">Add <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi ms-1 bi-person-plus" viewBox="0 0 16 16">
                     <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
                     <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
                   </svg></button>
@@ -42,7 +122,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button"  class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                           <button type="button" id="saveBtn" class="btn btn-primary">Save changes</button>
                         </div>
                       </div>
@@ -51,7 +131,7 @@
                 </div>
             <div class="col-4">
                 <form>
-                    <input type="text" id="inputSearch" placeholder="Search Student" class="form-control rounded-pill">
+                    <input type="text" id="searchInput" placeholder="Search Student" class="form-control rounded-pill">
                 </form>
             </div>
             <div class="col-4 d-flex justify-content-end">
@@ -99,6 +179,25 @@
                         </div>
                     </div>
                 </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header" id="nameHead">
+              
+            </div>
+            <div class="modal-body d-flex flex-column align-items-center justify-content-center">
+                <div class="loader"></div>
+                <h4 class="mt-4">Are u sure to delete?</h4>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id="closeBtn" data-bs-dismiss="modal">Close</button>
+              <!-- From Uiverse.io by cssbuttons-io --> 
+    
+    <button class="noselect" id="btnDelete"><span class="text">Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button>
             </div>
           </div>
         </div>
